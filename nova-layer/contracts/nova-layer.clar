@@ -1,9 +1,7 @@
 ;; NovaLayer - Cross-Chain Gaming Protocol Smart Contract
 ;; A comprehensive blockchain infrastructure for dynamic NFT card evolution
 
-;; =============================================================================
 ;; ERROR CONSTANTS
-;; =============================================================================
 
 (define-constant ERR-UNAUTHORIZED (err u100))
 (define-constant ERR-INVALID-STORYTELLER (err u101))
@@ -17,19 +15,11 @@
 (define-constant ERR-INSUFFICIENT-STAKE (err u109))
 (define-constant ERR-TIMELINE-TRIGGER-ALREADY-EXECUTED (err u110))
 
-;; =============================================================================
-;; CONSTANTS
-;; =============================================================================
-
 (define-constant PROTOCOL-OWNER tx-sender)
 (define-constant MAX-EVOLUTION-VARIANCE u1000)
 (define-constant MIN-EVOLUTIONISTS u3)
 (define-constant LORE-MULTIPLIER u100)
 (define-constant NARRATIVE-DNA-FEE u1000000)
-
-;; =============================================================================
-;; DATA MAPS AND VARIABLES
-;; =============================================================================
 
 ;; Storyteller registry
 (define-map storyteller-registry 
@@ -90,9 +80,6 @@
 (define-data-var storyteller-stake-requirement uint u10000000)
 (define-data-var treasury-balance uint u0)
 
-;; =============================================================================
-;; PRIVATE FUNCTIONS
-;; =============================================================================
 
 (define-private (validate-storyteller-exists (storyteller-id uint))
     (is-some (map-get? storyteller-registry { storyteller-id: storyteller-id }))
@@ -122,9 +109,6 @@
     (and (> evolution-timestamp u0) (> evolution-rate u0) (<= evolution-rate u1000))
 )
 
-;; =============================================================================
-;; ADMIN FUNCTIONS
-;; =============================================================================
 
 (define-public (pause-protocol)
     (begin
@@ -160,10 +144,6 @@
         (ok true)
     )
 )
-
-;; =============================================================================
-;; STORYTELLER MANAGEMENT
-;; =============================================================================
 
 (define-public (register-storyteller (stake-amount uint))
     (let ((storyteller-id (var-get next-storyteller-id)))
@@ -202,10 +182,6 @@
         (ok true)
     )
 )
-
-;; =============================================================================
-;; NARRATIVE DNA SYSTEM
-;; =============================================================================
 
 (define-public (create-narrative-dna 
     (dna-id (buff 32))
@@ -300,9 +276,6 @@
     )
 )
 
-;; =============================================================================
-;; TIMELINE TRIGGERS
-;; =============================================================================
 
 (define-public (register-timeline-trigger
     (target-contract principal)
